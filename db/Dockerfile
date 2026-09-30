@@ -1,4 +1,7 @@
-FROM eclipse-temurin:26-jdk
-COPY ./target/*-jar-with-dependencies.jar /tmp/app.jar
+FROM mysql/mysql-server:latest
 WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY test_db/*.sql /tmp/
+COPY test_db/*.dump /tmp/
+COPY test_db/employees.sql /docker-entrypoint-initdb.d
+ENV MYSQL_ROOT_PASSWORD example
+ENV MYSQL_ROOT_HOST=%
